@@ -1,0 +1,185 @@
+openapi: 3.0.3
+info:
+    title: Todo Service
+    description: Everyone learns with todos
+    version: "1.0"
+servers:
+    - url: http://localhost:8000
+paths:
+    /:
+        get:
+            tags:
+                - todo
+            summary: list todo
+            operationId: todo#list
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TodoresultCollection'
+                            example:
+                                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                                  ID: 1754730686885922691
+                                  Status: Officiis dolorem.
+                                  Title: Facilis aut autem consequuntur.
+                                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                                  ID: 1754730686885922691
+                                  Status: Officiis dolorem.
+                                  Title: Facilis aut autem consequuntur.
+                                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                                  ID: 1754730686885922691
+                                  Status: Officiis dolorem.
+                                  Title: Facilis aut autem consequuntur.
+                                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                                  ID: 1754730686885922691
+                                  Status: Officiis dolorem.
+                                  Title: Facilis aut autem consequuntur.
+        post:
+            tags:
+                - todo
+            summary: create todo
+            operationId: todo#create
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateRequestBody'
+                        example:
+                            description: Quasi facere.
+                            title: Numquam distinctio.
+            responses:
+                "201":
+                    description: Created response.
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                                example: Fugiat iusto eaque.
+                            example: Corporis et sed.
+    /{id}:
+        get:
+            tags:
+                - todo
+            summary: view todo
+            operationId: todo#view
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo id
+                  required: true
+                  schema:
+                    type: string
+                    description: Todo id
+                    example: Sit ex et.
+                  example: Dolores quis rerum laudantium voluptatem magni.
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Todoresult'
+                            example:
+                                Description: Voluptatem doloribus veniam quia exercitationem sit.
+                                ID: 3685655720076907568
+                                Status: Et quas quam molestiae molestias rem.
+                                Title: Magni dolor quia et est expedita adipisci.
+        post:
+            tags:
+                - todo
+            summary: complete todo
+            operationId: todo#complete
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo id
+                  required: true
+                  schema:
+                    type: string
+                    description: Todo id
+                    example: Eum ipsum quam recusandae fuga velit.
+                  example: Aspernatur et possimus voluptatem.
+            responses:
+                "201":
+                    description: Created response.
+    /openapi.json:
+        get:
+            tags:
+                - todo
+            summary: Download ./gen/http/openapi.json
+            operationId: todo#/openapi.json
+            responses:
+                "200":
+                    description: File downloaded
+components:
+    schemas:
+        CreateRequestBody:
+            type: object
+            properties:
+                description:
+                    type: string
+                    description: Todo description
+                    example: At totam earum illo.
+                title:
+                    type: string
+                    description: Todo title
+                    example: Consectetur qui cum earum.
+            example:
+                description: Dolores voluptas doloremque et aut inventore.
+                title: Placeat possimus quo.
+            required:
+                - title
+                - description
+        Todoresult:
+            type: object
+            properties:
+                Description:
+                    type: string
+                    description: Description of the Todo
+                    example: Qui assumenda ipsum consequatur nisi dolorem.
+                ID:
+                    type: integer
+                    description: Unique identifier for the Todo
+                    example: 3746761877217356699
+                    format: int64
+                Status:
+                    type: string
+                    description: Status of the Todo
+                    example: Assumenda aliquid perspiciatis voluptatem.
+                Title:
+                    type: string
+                    description: Title of the Todo
+                    example: Assumenda ut ut quia error rerum sed.
+            example:
+                Description: Repellat culpa ipsum optio at doloribus ea.
+                ID: 1559657663132969327
+                Status: Saepe et.
+                Title: Amet architecto aut culpa quisquam assumenda.
+            required:
+                - ID
+                - Title
+                - Description
+                - Status
+        TodoresultCollection:
+            type: array
+            items:
+                $ref: '#/components/schemas/Todoresult'
+            example:
+                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                  ID: 1754730686885922691
+                  Status: Officiis dolorem.
+                  Title: Facilis aut autem consequuntur.
+                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                  ID: 1754730686885922691
+                  Status: Officiis dolorem.
+                  Title: Facilis aut autem consequuntur.
+                - Description: Eum exercitationem rerum blanditiis iure voluptas.
+                  ID: 1754730686885922691
+                  Status: Officiis dolorem.
+                  Title: Facilis aut autem consequuntur.
+tags:
+    - name: todo
+      description: Operations for Todos

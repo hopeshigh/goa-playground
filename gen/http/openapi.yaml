@@ -1,0 +1,199 @@
+swagger: "2.0"
+info:
+    title: Todo Service
+    description: Everyone learns with todos
+    version: ""
+host: localhost:8000
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /:
+        get:
+            tags:
+                - todo
+            summary: list todo
+            operationId: todo#list
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/TodoTodoresultResponseCollection'
+            schemes:
+                - http
+        post:
+            tags:
+                - todo
+            summary: create todo
+            operationId: todo#create
+            parameters:
+                - name: CreateRequestBody
+                  in: body
+                  required: true
+                  schema:
+                    $ref: '#/definitions/TodoCreateRequestBody'
+                    required:
+                        - title
+                        - description
+            responses:
+                "201":
+                    description: Created response.
+                    schema:
+                        type: string
+            schemes:
+                - http
+    /{id}:
+        get:
+            tags:
+                - todo
+            summary: view todo
+            operationId: todo#view
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo id
+                  required: true
+                  type: string
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/TodoViewResponseBody'
+            schemes:
+                - http
+        post:
+            tags:
+                - todo
+            summary: complete todo
+            operationId: todo#complete
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo id
+                  required: true
+                  type: string
+            responses:
+                "201":
+                    description: Created response.
+            schemes:
+                - http
+    /openapi.json:
+        get:
+            tags:
+                - todo
+            summary: Download ./gen/http/openapi.json
+            operationId: todo#/openapi.json
+            responses:
+                "200":
+                    description: File downloaded
+                    schema:
+                        type: file
+            schemes:
+                - http
+definitions:
+    TodoCreateRequestBody:
+        title: TodoCreateRequestBody
+        type: object
+        properties:
+            description:
+                type: string
+                description: Todo description
+                example: Dignissimos voluptas qui qui aut rerum.
+            title:
+                type: string
+                description: Todo title
+                example: Officia consequatur consequatur.
+        example:
+            description: Dolorum cupiditate est error magni fugit.
+            title: Quia rem quo at aut vero.
+        required:
+            - title
+            - description
+    TodoTodoresultResponseCollection:
+        title: 'Mediatype identifier: todoresult; type=collection; view=default'
+        type: array
+        items:
+            $ref: '#/definitions/TodoresultResponse'
+        description: ListResponseBody is the result type for an array of TodoresultResponse (default view)
+        example:
+            - Description: Voluptatem officia vero fugiat cumque ab.
+              ID: 7041713459340774230
+              Status: Dolore voluptatum est voluptatibus cum.
+              Title: Enim nisi itaque eveniet consequatur aut ipsam.
+            - Description: Voluptatem officia vero fugiat cumque ab.
+              ID: 7041713459340774230
+              Status: Dolore voluptatum est voluptatibus cum.
+              Title: Enim nisi itaque eveniet consequatur aut ipsam.
+            - Description: Voluptatem officia vero fugiat cumque ab.
+              ID: 7041713459340774230
+              Status: Dolore voluptatum est voluptatibus cum.
+              Title: Enim nisi itaque eveniet consequatur aut ipsam.
+    TodoViewResponseBody:
+        title: 'Mediatype identifier: todoresult; view=default'
+        type: object
+        properties:
+            Description:
+                type: string
+                description: Description of the Todo
+                example: Ea provident voluptates.
+            ID:
+                type: integer
+                description: Unique identifier for the Todo
+                example: 5648491383675271446
+                format: int64
+            Status:
+                type: string
+                description: Status of the Todo
+                example: Eveniet quam voluptatem.
+            Title:
+                type: string
+                description: Title of the Todo
+                example: Optio velit sapiente voluptas vitae ex quas.
+        description: ViewResponseBody result type (default view)
+        example:
+            Description: Voluptatibus autem molestias qui sit omnis.
+            ID: 6581644742103128896
+            Status: Similique eos qui ea aut labore vel.
+            Title: Officia est neque.
+        required:
+            - ID
+            - Title
+            - Description
+            - Status
+    TodoresultResponse:
+        title: 'Mediatype identifier: todoresult; view=default'
+        type: object
+        properties:
+            Description:
+                type: string
+                description: Description of the Todo
+                example: Dolor impedit officiis et repellat.
+            ID:
+                type: integer
+                description: Unique identifier for the Todo
+                example: 6112546078553622947
+                format: int64
+            Status:
+                type: string
+                description: Status of the Todo
+                example: Voluptates omnis exercitationem recusandae natus molestiae.
+            Title:
+                type: string
+                description: Title of the Todo
+                example: Repellendus cum pariatur.
+        description: TodoresultResponse result type (default view)
+        example:
+            Description: Velit quis incidunt ut.
+            ID: 6073829950005536953
+            Status: Ad dolores nisi est accusantium.
+            Title: Aliquid odit velit fugiat.
+        required:
+            - ID
+            - Title
+            - Description
+            - Status
